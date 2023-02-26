@@ -30,7 +30,7 @@ const thoughtsController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  getThoughtById(req, res) {
+  getOneThought(req, res) {
     Thoughts.findOne({ _id: req.params.thoughtId })
       .select("-__v")
       .populate({ path: "reactions", select: "-__v" })
@@ -42,7 +42,7 @@ const thoughtsController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  updateThoughtById(req, res) {
+  updateOneThought(req, res) {
     Thoughts.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
@@ -59,7 +59,7 @@ const thoughtsController = {
       });
   },
  
-  deleteThoughtById(req, res) {
+  deleteOneThought(req, res) {
     Thoughts.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
@@ -86,7 +86,7 @@ const thoughtsController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  deleteReactionById(req, res) {
+  deleteOneReaction(req, res) {
     Thoughts.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId} } },
