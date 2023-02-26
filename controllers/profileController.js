@@ -13,7 +13,7 @@ const profileController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  getSingleProfile(req, res) {
+  getOneProfile(req, res) {
     Profile.findOne({ _id: req.params.profileId })
       .select("-__v")
       .populate("thoughts")
@@ -26,7 +26,7 @@ const profileController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  updateProfileById(req, res) {
+  updateOneProfile(req, res) {
     Profile.findOneAndUpdate(
       { _id: req.params.profileId },
       { $set: req.body },
@@ -43,7 +43,7 @@ const profileController = {
       });
   },
 
-  deleteProfileById(req, res) {
+  deleteOneProfile(req, res) {
     Profile.findOneAndRemove({ _id: req.params.profileId })
       .then((profile) =>
         !profile
