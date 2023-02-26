@@ -56,7 +56,7 @@ const profileController = {
       });
   },
 
-  addProfileFriend(req, res) {
+  addFriend(req, res) {
     Profile.findOneAndUpdate(
       { _id: req.params.profileId },
       { $addToSet: { friends: req.params.friendId } },
@@ -70,7 +70,7 @@ const profileController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  deleteProfileFriend(req, res) {
+  deleteFriend(req, res) {
     Profile.findOneAndUpdate(
       { _id: req.params.profileId },
       { $pull: { friends: req.params.friendId } },

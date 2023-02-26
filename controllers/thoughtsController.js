@@ -2,7 +2,7 @@ const { Thoughts, Profile } = require("../models");
 
 const thoughtsController = {
 
-  createThoughts(req, res) {
+  createThought(req, res) {
     Thoughts.create(req.body)
       .then((thoughts) => {
         return Profile.findOneAndUpdate(
@@ -30,7 +30,7 @@ const thoughtsController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  getSingleThought(req, res) {
+  getThoughtById(req, res) {
     Thoughts.findOne({ _id: req.params.thoughtId })
       .select("-__v")
       .populate({ path: "reactions", select: "-__v" })
@@ -42,7 +42,7 @@ const thoughtsController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  updateSingleThought(req, res) {
+  updateThoughtById(req, res) {
     Thoughts.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
@@ -59,7 +59,7 @@ const thoughtsController = {
       });
   },
  
-  deleteThought(req, res) {
+  deleteThoughtById(req, res) {
     Thoughts.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
@@ -86,7 +86,7 @@ const thoughtsController = {
       .catch((err) => res.status(500).json(err));
   },
 
-  deleteReaction(req, res) {
+  deleteReactionById(req, res) {
     Thoughts.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $pull: { reactions: { reactionId: req.params.reactionId} } },
