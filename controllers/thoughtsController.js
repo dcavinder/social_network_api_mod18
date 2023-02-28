@@ -1,10 +1,10 @@
-const { Thoughts, Profile } = require("../models");
+const { Thought, Profile } = require("../models");
 
 const thoughtsController = {
 
   createThought(req, res) {
-    Thoughts.create(req.body)
-      .then((thoughts) => {
+    Thought.create(req.body)
+      .then((thought) => {
         return Profile.findOneAndUpdate(
           { _id: req.body.profileId },
           { $addToSet: { thoughts: thoughts._id } },
@@ -25,13 +25,13 @@ const thoughtsController = {
   },
 
   getThoughts(req, res) {
-    Thoughts.find()
-      .then((thoughts) => res.json(thoughts))
+    Thought.find()
+      .then((thought) => res.json(thought))
       .catch((err) => res.status(500).json(err));
   },
 
   getOneThought(req, res) {
-    Thoughts.findOne({ _id: req.params.thoughtId })
+    Thought.findOne({ _id: req.params.thoughtId })
       .select("-__v")
       .populate({ path: "reactions", select: "-__v" })
       .then((thought) =>
@@ -43,7 +43,7 @@ const thoughtsController = {
   },
 
   updateOneThought(req, res) {
-    Thoughts.findOneAndUpdate(
+    Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $set: req.body },
       { runValidators: true, new: true }
@@ -60,7 +60,7 @@ const thoughtsController = {
   },
  
   deleteOneThought(req, res) {
-    Thoughts.findOneAndRemove({ _id: req.params.thoughtId })
+    Thought.findOneAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "Invalid Request" })
@@ -73,7 +73,7 @@ const thoughtsController = {
   },
 
   addReaction(req, res) {
-    Thoughts.findOneAndUpdate(
+    Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
       { $addToSet: { reactions: req.body } },
       { runValidators: true, new: true }
@@ -87,9 +87,9 @@ const thoughtsController = {
   },
 
   deleteOneReaction(req, res) {
-    Thoughts.findOneAndUpdate(
+    Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },
-      { $pull: { reactions: { reactionId: req.params.reactionId} } },
+      { $pull: { reactions: { reactId: req.params.reactId} } },
       { runValidators: true, new: true }
     )
       .then((reaction) =>
