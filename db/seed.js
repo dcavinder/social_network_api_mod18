@@ -1,5 +1,5 @@
-const connection = require('../config/conection');
-const { Profile, Thoughts } = require('../models');
+const connection = require('../config/connection');
+const { Profile, Thought } = require('../models');
 
 connection.on('error', (err) => err);
 
@@ -7,7 +7,7 @@ connection.once('open', async () => {
     console.log('connected');
 
     await Profile.deleteMany({});
-    await Thoughts.deleteMany({});
+    await Thought.deleteMany({});
 
     const profileSet = [
         {
@@ -44,7 +44,7 @@ connection.once('open', async () => {
     ]
     
     await Profile.collection.insertMany(profileSet)
-    await Thoughts.collection.insertMany(thoughtsSet)
+    await Thought.collection.insertMany(thoughtsSet)
 
   console.info('Seed completed');
   process.exit(0);
