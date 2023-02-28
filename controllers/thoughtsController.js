@@ -6,8 +6,8 @@ const thoughtsController = {
     Thought.create(req.body)
       .then((thought) => {
         return Profile.findOneAndUpdate(
-          { _id: req.body.profileId },
-          { $addToSet: { thoughts: thoughts._id } },
+          { username: req.body.username },
+          { $addToSet: { thought: thought._id } },
           { new: true }
         );
       })
