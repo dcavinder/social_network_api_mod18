@@ -27,7 +27,7 @@ connection.once('open', async () => {
     const thoughtsSet = [
         {
             thoughtText: 'testing, testing 1,2,3...!',
-            username: 'susanG'
+            username: 'SusanG'
         },
         {
             thoughtText: 'Happy Wednesday!',

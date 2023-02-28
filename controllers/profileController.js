@@ -8,8 +8,8 @@ const profileController = {
   },
 
   getProfiles(req, res) {
-    profiles.find()
-      .then((profiles) => res.json(profiles))
+    Profile.find(req)
+      .then((dbProfileData) => res.json(dbProfileData))
       .catch((err) => res.status(500).json(err));
   },
 
