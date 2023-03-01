@@ -15,9 +15,6 @@ const profileController = {
 
   getOneProfile(req, res) {
     Profile.findOne({ _id: req.params.profileId })
-      .select("-__v")
-      .populate("thoughts")
-      .populate("friends")
       .then((profile) =>
         !profile
           ? res.status(404).json({ message: "Invalid Request" })

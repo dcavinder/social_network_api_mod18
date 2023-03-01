@@ -32,8 +32,6 @@ const thoughtsController = {
 
   getOneThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
-      .select("-__v")
-      .populate({ path: "reactions", select: "-__v" })
       .then((thought) =>
         !thought
           ? res.status(404).json({ message: "Invalid request" })
